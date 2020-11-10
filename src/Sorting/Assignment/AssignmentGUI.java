@@ -5,8 +5,10 @@
  */
 package Sorting.Assignment;
 
-import Sorting.Numbers;
 import static Sorting.StudentSort.selectionSort;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -17,100 +19,112 @@ public class AssignmentGUI extends javax.swing.JFrame {
     /**
      * Creates new form AssignmentGUI
      */
+    int[] myNumbers = new int[50000];
+    DefaultListModel model = new DefaultListModel();
+
     public AssignmentGUI() {
         initComponents();
+        jList1.setModel(model);
+       
     }
-    public static void main(String[] args) {
-        Numbers myNumbers[] = new Numbers[5000];
-        
-        for (int i = 0; i < myNumbers.length; i++) {
-            myNumbers[i] = new Numbers
-                        ("" + (i+1),
-                        (int)(Math.random() * 0 + 5000),
-                        (int)(Math.random() * 0 + 5000)
-                        );
-        
-            for(Numbers x: myNumbers){
-            System.out.print(x + ", ");
-        }
-        System.out.println("\n----------------------\n");
-        }
-        }
-        public static void bubbleSort(int[] myNumbers){
-   	int k = 0;
-   	boolean exchangeMade = true;
-	// Make up to n - 1 passes through array, exit 
-	//early if no exchanges are made on previous pass
-  
- 	while ((k < myNumbers.length - 1) && exchangeMade){
-      		exchangeMade = false;
-      		k++;
-      		for (int j = 0; j < myNumbers.length - k; j++) { 
-         		if (myNumbers[j] > [j + 1]){
-            			swap(myNumbers, j, j + 1);		 
-            			exchangeMade = true;
-         		}//end if
-		}//end for
-	}//end while
 
-}
-public static void swap(int[] a, int x, int y){
-   int temp = a[x];
-   a[x] = a[y];
-   a[y] = temp;
-}
-public static void selectionSort(int[] myNumbers){
-   for (int i = 0; i < myNumbers.length - 1; i++){
-      int minIndex = findMinimum(myNumbers, i);
-      if (minIndex != i)
-	//if lowest is not already in place
-         swap(myNumbers, i, minIndex);
-   } //end for
-}  
+    public static void bubbleSort(int[] a) {
+        int k = 0;
+        boolean exchangeMade = true;
+        // Make up to n - 1 passes through array, exit 
+        //early if no exchanges are made on previous pass
+
+        while ((k < a.length - 1) && exchangeMade) {
+            exchangeMade = false;
+            k++;
+            for (int j = 0; j < a.length - k; j++) {
+                if (a[j] > a[j + 1]) {
+                    swap(a, j, j + 1);
+                    exchangeMade = true;
+                }//end if
+            }//end for
+        }//end while
+    }
+
+//supporting swap method
+    public static void swap(int[] a, int x, int y) {
+        int temp = a[x];
+        a[x] = a[y];
+        a[y] = temp;
+    }
+
+    public static void selectionSort(int[] a) {
+        for (int i = 0; i < a.length - 1; i++) {
+            int minIndex = findMinimum(a, i);
+            if (minIndex != i) //if lowest is not already in place
+            {
+                swap(a, i, minIndex);
+            }
+        } //end for
+    }
 
 //supporting findMinimum method
-
-public static int findMinimum(int[] myNumbers, int first){
-   //first=where to start looking from
-   //assume first is also the smallest for now
-   int minIndex = first; 
-   for (int i = first + 1; i < myNumbers.length; i++)
-      if (myNumbers[i] < myNumbers[minIndex])
-         minIndex = i;
-   return minIndex;
-}
+    public static int findMinimum(int[] a, int first) {
+        //first=where to start looking from
+        //assume first is also the smallest for now
+        int minIndex = first;
+        for (int i = first + 1; i < a.length; i++) {
+            if (a[i] < a[minIndex]) {
+                minIndex = i;
+            }
+        }
+        return minIndex;
+    }
 
 //supporting swap method (same as bubble sort swap)
+    public static void insertionSort(int a[]) {
+        int itemToInsert, j;
+        boolean stillLooking;
 
+        //on the kth pass, pass item k upwards in list
+        //and insert it in its proper place amoung the
+        //first k entries in an array
+        for (int k = 1; k < a.length; k++) {
+            //move backwards through list, looking for
+            //the right place to insert a[k];
+            itemToInsert = a[k];
+            j = k - 1;
+            stillLooking = true;
+            while (j >= 0 && stillLooking) {
+                if (itemToInsert < a[j]) {
+                    //move item higher
+                    a[j + 1] = a[j];
+                    j--;
+                } else {
+                    //we have found new home for a[k];
+                    stillLooking = false;
+                }//end else// j+1 is where the item goes
+                a[j + 1] = itemToInsert;
+            }//end while
+        }//end for
+    }//end method
+void quickSort (int[] a, int left, int right) {
 
+    if (left >= right) return;
 
-public static void insertionSort(int myNumbers[]){
-	int itemToInsert, j;
-	boolean stillLooking;
-
-	//on the kth pass, pass item k upwards in list
-	//and insert it in its proper place amoung the
-	//first k entries in an array
-
-	for (int k=1; k<myNumbers.length; k++){
-	//move backwards through list, looking for
-	//the right place to insert a[k];
-		itemToInsert = myNumbers[k];
-		j=k-1;
-		stillLooking=true;
-		while(j >=0 && stillLooking){
-			if (itemToInsert < myNumbers[j]){
-				//move item higher
-				myNumbers[j+1] = myNumbers[j];
-				j--;
-			}else{
-				//we have found new home for a[k];
-				stillLooking=false;
-			}//end else// j+1 is where the item goes
-			myNumbers[j+1]=itemToInsert;
-		}//end while
-  	}//end for
+    int i = left;
+    int j = right;
+    int pivotValue = a[(left + right) / 2];
+    while (i < j){
+    while (a[i] < pivotValue) i++;
+    while (pivotValue < a[j]) j--;
+    if (i <= 5){
+    int temp = a[i];
+    a[i] = a[j];
+    a[j] = temp;
+    i++;
+    j--;
+  }
 }
+quickSort (a, left, j);
+quickSort (a, i, right);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -121,7 +135,7 @@ public static void insertionSort(int myNumbers[]){
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lblTimeDisplay = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         btnbubble = new javax.swing.JButton();
@@ -140,11 +154,16 @@ public static void insertionSort(int myNumbers[]){
 
         jButton1.setText("Generate Numbers");
         jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("66 ms");
-        jLabel1.setToolTipText("");
+        lblTimeDisplay.setBackground(new java.awt.Color(0, 0, 0));
+        lblTimeDisplay.setForeground(new java.awt.Color(255, 255, 255));
+        lblTimeDisplay.setText("66 ms");
+        lblTimeDisplay.setToolTipText("");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -162,9 +181,19 @@ public static void insertionSort(int myNumbers[]){
 
         btnselect.setText("Selection Sort");
         btnselect.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnselect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnselectActionPerformed(evt);
+            }
+        });
 
         btninsert.setText("Insertion Sort");
         btninsert.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btninsert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btninsertActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -198,6 +227,11 @@ public static void insertionSort(int myNumbers[]){
 
         btnquick.setText("Quik Sort");
         btnquick.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnquick.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnquickActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Recursion");
 
@@ -261,11 +295,6 @@ public static void insertionSort(int myNumbers[]){
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(jList1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -277,7 +306,7 @@ public static void insertionSort(int myNumbers[]){
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTimeDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -290,7 +319,7 @@ public static void insertionSort(int myNumbers[]){
                 .addGap(23, 23, 23)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTimeDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -309,21 +338,79 @@ public static void insertionSort(int myNumbers[]){
 
     private void btnclearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnclearActionPerformed
         // TODO add your handling code here:
+        model.clear();
     }//GEN-LAST:event_btnclearActionPerformed
 
     private void btnexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexitActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnexitActionPerformed
 
     private void btnbubbleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbubbleActionPerformed
         // TODO add your handling code here:
-        model.clear(); //erase
+        model.clear();
+        long start = System.currentTimeMillis();
         bubbleSort(myNumbers);
-        //reprint names to the list
-        for (int i = 0; i < 100; i++) {
-            model.add(i,stu[i].getName());
+         for (int i = 0; i < myNumbers.length; i++) {
+            model.add(i, myNumbers[i]);
+            long finish = System.currentTimeMillis();
+         long elapsedTime = finish - start;
+         String TimeAsString = Long.toString(elapsedTime);
+         lblTimeDisplay.setText(TimeAsString);
+        }
     }//GEN-LAST:event_btnbubbleActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        model.clear();
+         for (int i = 0; i < myNumbers.length; i++) {
+            myNumbers[i] = (int) (Math.random() * 50000);
+            model.add(i, myNumbers[i]);
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnselectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnselectActionPerformed
+        // TODO add your handling code here:
+        model.clear();
+        long start = System.currentTimeMillis();
+        selectionSort(myNumbers);
+         for (int i = 0; i < myNumbers.length; i++) {
+            model.add(i, myNumbers[i]);
+            long finish = System.currentTimeMillis();
+         long elapsedTime = finish - start;
+         String TimeAsString = Long.toString(elapsedTime);
+         lblTimeDisplay.setText(TimeAsString);
+         }
+    }//GEN-LAST:event_btnselectActionPerformed
+
+    private void btninsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btninsertActionPerformed
+        // TODO add your handling code here:
+        model.clear();
+        long start = System.currentTimeMillis();
+        insertionSort(myNumbers);
+        for (int i = 0; i < myNumbers.length; i++) {
+            model.add(i, myNumbers[i]);
+         long finish = System.currentTimeMillis();
+         long elapsedTime = finish - start;
+         String TimeAsString = Long.toString(elapsedTime);
+         lblTimeDisplay.setText(TimeAsString);
+         }
+    }//GEN-LAST:event_btninsertActionPerformed
+
+    private void btnquickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnquickActionPerformed
+        // TODO add your handling code here:
+        model.clear();
+        long start = System.currentTimeMillis();
+        quickSort(myNumbers);
+         for (int i = 0; i < myNumbers.length; i++) {
+            model.add(i, myNumbers[i]);
+            long finish = System.currentTimeMillis();
+         long elapsedTime = finish - start;
+         String TimeAsString = Long.toString(elapsedTime);
+         lblTimeDisplay.setText(TimeAsString);
+    }//GEN-LAST:event_btnquickActionPerformed
+    }
     /**
      * @param args the command line arguments
      */
@@ -367,7 +454,6 @@ public static void insertionSort(int myNumbers[]){
     private javax.swing.JButton btnquick;
     private javax.swing.JButton btnselect;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JList<String> jList1;
@@ -375,5 +461,6 @@ public static void insertionSort(int myNumbers[]){
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTimeDisplay;
     // End of variables declaration//GEN-END:variables
 }
