@@ -25,7 +25,7 @@ public class AssignmentGUI extends javax.swing.JFrame {
     public AssignmentGUI() {
         initComponents();
         jList1.setModel(model);
-       
+
     }
 
     public static void bubbleSort(int[] a) {
@@ -103,26 +103,33 @@ public class AssignmentGUI extends javax.swing.JFrame {
             }//end while
         }//end for
     }//end method
-void quickSort (int[] a, int left, int right) {
 
-    if (left >= right) return;
+    void quickSort(int[] a, int left, int right) {
 
-    int i = left;
-    int j = right;
-    int pivotValue = a[(left + right) / 2];
-    while (i < j){
-    while (a[i] < pivotValue) i++;
-    while (pivotValue < a[j]) j--;
-    if (i <= 5){
-    int temp = a[i];
-    a[i] = a[j];
-    a[j] = temp;
-    i++;
-    j--;
-  }
-}
-quickSort (a, left, j);
-quickSort (a, i, right);
+        if (left >= right) {
+            return;
+        }
+
+        int i = left;
+        int j = right;
+        int pivotValue = a[(left + right) / 2];
+        while (i < j) {
+            while (a[i] < pivotValue) {
+                i++;
+            }
+            while (pivotValue < a[j]) {
+                j--;
+            }
+            if (i <= j) {
+                int temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+                i++;
+                j--;
+            }
+        }
+        quickSort(a, left, j);
+        quickSort(a, i, right);
     }
 
     /**
@@ -351,19 +358,19 @@ quickSort (a, i, right);
         model.clear();
         long start = System.currentTimeMillis();
         bubbleSort(myNumbers);
-         for (int i = 0; i < myNumbers.length; i++) {
+        for (int i = 0; i < myNumbers.length; i++) {
             model.add(i, myNumbers[i]);
             long finish = System.currentTimeMillis();
-         long elapsedTime = finish - start;
-         String TimeAsString = Long.toString(elapsedTime);
-         lblTimeDisplay.setText(TimeAsString);
+            long elapsedTime = finish - start;
+            String TimeAsString = Long.toString(elapsedTime);
+            lblTimeDisplay.setText(TimeAsString);
         }
     }//GEN-LAST:event_btnbubbleActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         model.clear();
-         for (int i = 0; i < myNumbers.length; i++) {
+        for (int i = 0; i < myNumbers.length; i++) {
             myNumbers[i] = (int) (Math.random() * 50000);
             model.add(i, myNumbers[i]);
         }
@@ -375,13 +382,13 @@ quickSort (a, i, right);
         model.clear();
         long start = System.currentTimeMillis();
         selectionSort(myNumbers);
-         for (int i = 0; i < myNumbers.length; i++) {
+        for (int i = 0; i < myNumbers.length; i++) {
             model.add(i, myNumbers[i]);
             long finish = System.currentTimeMillis();
-         long elapsedTime = finish - start;
-         String TimeAsString = Long.toString(elapsedTime);
-         lblTimeDisplay.setText(TimeAsString);
-         }
+            long elapsedTime = finish - start;
+            String TimeAsString = Long.toString(elapsedTime);
+            lblTimeDisplay.setText(TimeAsString);
+        }
     }//GEN-LAST:event_btnselectActionPerformed
 
     private void btninsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btninsertActionPerformed
@@ -391,26 +398,27 @@ quickSort (a, i, right);
         insertionSort(myNumbers);
         for (int i = 0; i < myNumbers.length; i++) {
             model.add(i, myNumbers[i]);
-         long finish = System.currentTimeMillis();
-         long elapsedTime = finish - start;
-         String TimeAsString = Long.toString(elapsedTime);
-         lblTimeDisplay.setText(TimeAsString);
-         }
+            long finish = System.currentTimeMillis();
+            long elapsedTime = finish - start;
+            String TimeAsString = Long.toString(elapsedTime);
+            lblTimeDisplay.setText(TimeAsString);
+        }
     }//GEN-LAST:event_btninsertActionPerformed
 
     private void btnquickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnquickActionPerformed
         // TODO add your handling code here:
         model.clear();
         long start = System.currentTimeMillis();
-        quickSort(myNumbers);
-         for (int i = 0; i < myNumbers.length; i++) {
+        quickSort(myNumbers,0,myNumbers.length-1);
+        for (int i = 0; i < myNumbers.length; i++) {
             model.add(i, myNumbers[i]);
             long finish = System.currentTimeMillis();
-         long elapsedTime = finish - start;
-         String TimeAsString = Long.toString(elapsedTime);
-         lblTimeDisplay.setText(TimeAsString);
+            long elapsedTime = finish - start;
+            String TimeAsString = Long.toString(elapsedTime);
+            lblTimeDisplay.setText(TimeAsString);
     }//GEN-LAST:event_btnquickActionPerformed
     }
+
     /**
      * @param args the command line arguments
      */

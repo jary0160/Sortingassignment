@@ -5,7 +5,7 @@
  */
 package Sorting.Assignment;
 
-import Sorting.Numbers;
+import Sorting.Assignment.Numbers;
 import static Sorting.SortingNumbers.swap;
 
 /**
@@ -108,6 +108,28 @@ public static void insertionSort(int myNumbers[]){
 		}//end while
   	}//end for
 }//end method
+
+void quickSort (int[] a, int left, int right) {
+
+    if (left >= right) return;
+
+    int i = left;
+    int j = right;
+    int pivotValue = a[(left + right) / 2];
+    while (i < j){
+    while (a[i] < pivotValue) i++;
+    while (pivotValue < a[j]) j--;
+    if (i <= 5){
+    int temp = a[i];
+    a[i] = a[j];
+    a[j] = temp;
+    i++;
+    j--;
+  }
+}
+quickSort (a, left, j);
+quickSort (a, i, right);
+    }
 }
     
 
